@@ -59,7 +59,7 @@ namespace Client
             var bytes = msg.Serialize();
             stream.Write(bytes, 0, bytes.Count());
         }
-        private List<byte> readForFlag(byte flag)
+        private byte[] readForFlag(byte flag = 0x00)
         {
             var buf = new List<byte>();
             while (true)
@@ -68,7 +68,7 @@ namespace Client
                 buf.Add(bt);
                 if (bt == flag)
                 {
-                    return buf;
+                    return buf.ToArray();
                 }
             }
         }
@@ -78,10 +78,14 @@ namespace Client
         {
             while (connected)
             {
-                var responseCode = stream.ReadByte();
-                switch (responseCode)
+                var data = readForFlag();
+                switch (data[0])
                 {
                     case 0x02:
+                        var authResultMsg = M.AuthResultMsg.Deserialize(data); 
+
+                        break;
+                    case 0x03:
 
                     default:
                         break;

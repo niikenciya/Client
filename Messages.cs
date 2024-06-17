@@ -53,7 +53,6 @@ namespace Messages
         public static byte[] GetRawData(byte[] data)
         {
             return data.Skip(1).Take(data.Length - 2).ToArray();
-            // return data[1..^1].ToArray(); // [1..^1] - убираем первый и последний байт. Источник: https://stackoverflow.com/a/70672739/23765108
         }
 
     }
