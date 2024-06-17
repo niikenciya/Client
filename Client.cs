@@ -89,11 +89,6 @@ namespace Client
             }
         }
 
-        public static long bytesToUnix(byte[] bytes) // поменять обратно на приват
-        {
-            return BitConverter.ToInt64(bytes, 0);
-        }
-
 
         public static bool CheckIp(string ip)
         {
