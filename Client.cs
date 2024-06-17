@@ -38,7 +38,7 @@ namespace Client
             client.Connect(ip, port);
             stream = client.GetStream();
             // Send AuthMessage
-            sendMsg(new M.AuthMessage(
+            sendMsg(new M.AuthMsg(
                 userName
                 ));
 
@@ -55,7 +55,7 @@ namespace Client
         {
             viwer.AppendText(message + "\n");
         }
-        private void sendMsg(M.Message msg) {
+        private void sendMsg(M.Msg msg) {
             var bytes = msg.Serialize();
             stream.Write(bytes, 0, bytes.Count());
         }
