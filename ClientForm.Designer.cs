@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label ipLabel;
-            System.Windows.Forms.Label portLabel;
-            System.Windows.Forms.Label userNameLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
+            this.ipLabel = new System.Windows.Forms.Label();
+            this.portLabel = new System.Windows.Forms.Label();
+            this.userNameLabel = new System.Windows.Forms.Label();
             this.ipTxt = new System.Windows.Forms.TextBox();
             this.portTxt = new System.Windows.Forms.TextBox();
             this.userNameTxt = new System.Windows.Forms.TextBox();
@@ -39,43 +39,42 @@
             this.chatViwer = new System.Windows.Forms.RichTextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.messageTxt = new System.Windows.Forms.TextBox();
-            ipLabel = new System.Windows.Forms.Label();
-            portLabel = new System.Windows.Forms.Label();
-            userNameLabel = new System.Windows.Forms.Label();
+            this.loaderImg = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImg)).BeginInit();
             this.SuspendLayout();
             // 
             // ipLabel
             // 
-            ipLabel.AutoSize = true;
-            ipLabel.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            ipLabel.ForeColor = System.Drawing.Color.White;
-            ipLabel.Location = new System.Drawing.Point(13, 12);
-            ipLabel.Name = "ipLabel";
-            ipLabel.Size = new System.Drawing.Size(123, 27);
-            ipLabel.TabIndex = 0;
-            ipLabel.Text = "Ip сервера:";
+            this.ipLabel.AutoSize = true;
+            this.ipLabel.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ipLabel.ForeColor = System.Drawing.Color.White;
+            this.ipLabel.Location = new System.Drawing.Point(13, 12);
+            this.ipLabel.Name = "ipLabel";
+            this.ipLabel.Size = new System.Drawing.Size(123, 27);
+            this.ipLabel.TabIndex = 0;
+            this.ipLabel.Text = "Ip сервера:";
             // 
             // portLabel
             // 
-            portLabel.AutoSize = true;
-            portLabel.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            portLabel.ForeColor = System.Drawing.Color.White;
-            portLabel.Location = new System.Drawing.Point(13, 49);
-            portLabel.Name = "portLabel";
-            portLabel.Size = new System.Drawing.Size(154, 27);
-            portLabel.TabIndex = 2;
-            portLabel.Text = "Порт сервера:";
+            this.portLabel.AutoSize = true;
+            this.portLabel.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.portLabel.ForeColor = System.Drawing.Color.White;
+            this.portLabel.Location = new System.Drawing.Point(13, 49);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(154, 27);
+            this.portLabel.TabIndex = 2;
+            this.portLabel.Text = "Порт сервера:";
             // 
             // userNameLabel
             // 
-            userNameLabel.AutoSize = true;
-            userNameLabel.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            userNameLabel.ForeColor = System.Drawing.Color.White;
-            userNameLabel.Location = new System.Drawing.Point(13, 85);
-            userNameLabel.Name = "userNameLabel";
-            userNameLabel.Size = new System.Drawing.Size(112, 27);
-            userNameLabel.TabIndex = 4;
-            userNameLabel.Text = "Никнейм:";
+            this.userNameLabel.AutoSize = true;
+            this.userNameLabel.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.userNameLabel.ForeColor = System.Drawing.Color.White;
+            this.userNameLabel.Location = new System.Drawing.Point(13, 85);
+            this.userNameLabel.Name = "userNameLabel";
+            this.userNameLabel.Size = new System.Drawing.Size(112, 27);
+            this.userNameLabel.TabIndex = 4;
+            this.userNameLabel.Text = "Никнейм:";
             // 
             // ipTxt
             // 
@@ -192,27 +191,45 @@
             this.messageTxt.Text = "Приветик, я тут немного посижу?)";
             this.messageTxt.Visible = false;
             // 
+            // loaderImg
+            // 
+            this.loaderImg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.loaderImg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.loaderImg.Enabled = false;
+            this.loaderImg.Image = ((System.Drawing.Image)(resources.GetObject("loaderImg.Image")));
+            this.loaderImg.Location = new System.Drawing.Point(0, 0);
+            this.loaderImg.Name = "loaderImg";
+            this.loaderImg.Size = new System.Drawing.Size(382, 160);
+            this.loaderImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loaderImg.TabIndex = 10;
+            this.loaderImg.TabStop = false;
+            this.loaderImg.Visible = false;
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(384, 161);
+            this.Controls.Add(this.loaderImg);
             this.Controls.Add(this.messageTxt);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.chatViwer);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.userNameTxt);
-            this.Controls.Add(userNameLabel);
+            this.Controls.Add(this.userNameLabel);
             this.Controls.Add(this.portTxt);
-            this.Controls.Add(portLabel);
+            this.Controls.Add(this.portLabel);
             this.Controls.Add(this.ipTxt);
-            this.Controls.Add(ipLabel);
+            this.Controls.Add(this.ipLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "ClientForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Клиент";
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,6 +243,10 @@
         private System.Windows.Forms.RichTextBox chatViwer;
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.TextBox messageTxt;
+        private System.Windows.Forms.PictureBox loaderImg;
+        private System.Windows.Forms.Label ipLabel;
+        private System.Windows.Forms.Label portLabel;
+        private System.Windows.Forms.Label userNameLabel;
     }
 }
 

@@ -87,9 +87,10 @@ namespace Messages
         }
         public static AuthResultMsg Deserialize(byte[] data)
         {
+            var rawData = GetRawData(data);
             return new AuthResultMsg(
-                data[0],
-                UnicodeEncoding.UTF8.GetString(GetRawData(data))
+                rawData[0],
+                UnicodeEncoding.UTF8.GetString(rawData.Skip(1).ToArray())
             );
         }
     }
