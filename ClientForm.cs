@@ -7,7 +7,10 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+using M = Messages;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Client
 {
@@ -30,6 +33,7 @@ namespace Client
                 portLabel.Visible = true;
                 userNameLabel.Visible = true;
                 loaderImg.Visible = false;
+                connectButton.Visible = true;
 
                 ipLabel.Enabled = true;
                 portLabel.Enabled = true;
@@ -38,14 +42,53 @@ namespace Client
                 portTxt.Enabled = true;
                 userNameTxt.Enabled = true;
                 loaderImg.Enabled = false;
+                connectButton.Enabled = true;
+
+                messageTxt.Visible = false;
+                messageTxt.Enabled = false;
+
+                chatViwer.Visible = false;
+                chatViwer.Enabled = false;
+
+                sendButton.Visible = false;
+                sendButton.Enabled = false;
+
+                Size = new Size(MinimumSize.Width, MaximumSize.Height);
+
+                this.AcceptButton = connectButton;
             }));
         }
 
+        private void addMessage(M.NewMessageMsg msg)
+        {
+            Invoke((Action)(() => {
+                var needScrol = chatViwer.SelectionStart == chatViwer.TextLength;
+                chatViwer.SelectionColor = Color.LightSkyBlue;
+                chatViwer.AppendText("\n"+msg.Time.ToString("dd.MM.yy HH:mm "));
+                chatViwer.SelectionColor = Color.HotPink;
+                chatViwer.AppendText(msg.UserName + ": ");
+                chatViwer.SelectionColor = Color.White;
+                chatViwer.AppendText(msg.Text);
+                chatViwer.SelectionColor = Color.LightSkyBlue;
 
+
+
+                // прокрутка вниз 
+                if (needScrol)
+                {
+                    chatViwer.SelectionStart = chatViwer.TextLength;
+                    chatViwer.ScrollToCaret();
+                }
+
+            }));
+        }
         private void addText(string message)
         {
-            Invoke((Action)(() => { 
-                chatViwer.AppendText(message + "\n");
+            Invoke((Action)(() => {
+                chatViwer.SelectionColor = Color.White;
+                chatViwer.AppendText(message);
+                chatViwer.SelectionColor = Color.LightSkyBlue;
+
             }));
         }
         private void enterChat()
@@ -78,6 +121,10 @@ namespace Client
 
                 sendButton.Visible = true;
                 sendButton.Enabled = true;
+
+                Size = new Size(350, 425);
+
+                this.AcceptButton = sendButton;
             }));
         }
 
@@ -97,22 +144,46 @@ namespace Client
                 return;
             }
 
-            client = new Client(ip, port, /*chatViwer,*/ enterAuth, enterChat, addText);
+            client = new Client(ip, port, enterAuth, enterChat, addText, addMessage);
 
             loaderImg.Visible = true;
             loaderImg.Enabled = true;
-            var res = client.Connect(userName); // todo подключаться в второстепенном потоке
-            Console.WriteLine("Connect result");
-            Console.WriteLine(res);
-            if (res != 0) 
+            Thread connectThr = new Thread(() =>
             {
-                MessageBox.Show("Не удалось подключиться к серверу", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            } 
-            else 
+                var res = client.Connect(userName);
+                Console.WriteLine("Connect result");
+                Console.WriteLine(res);
+                if (res != 0)
+                {
+                    MessageBox.Show("Не удалось подключиться к серверу", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    enterAuth();
+                }
+                else
+                {
+                    Console.WriteLine("enterChat");
+                    enterChat();
+                    
+                }
+            });
+            connectThr.Start();
+        }
+
+        private void sendButton_Click(object sender, EventArgs e)
+        {
+            if (messageTxt.Text.Trim() != "")
             {
-                Console.WriteLine("enterChat");
-                enterChat();
+                client.SendMsg(new M.SendChatMessageMsg(
+                    messageTxt.Text.Trim()
+                        ));
+                messageTxt.Text = "";
+                messageTxt.Select();
             }
+            
+        }
+
+        private void ClientForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // todo отключать сокеты, потоки и т. д.
         }
     }
 }

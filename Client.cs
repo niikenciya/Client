@@ -30,14 +30,15 @@ namespace Client
         private Action enterAuth;
         private Action enterChat;
         private Action<string> addText;
-        public Client(string ip, string port, /*RichTextBox viwer,*/ Action enterAuth, Action enterChat, Action<string> addText) 
+        private Action<M.NewMessageMsg> addMessage;
+        public Client(string ip, string port, Action enterAuth, Action enterChat, Action<string> addText, Action<M.NewMessageMsg> addMessage) 
         {
             this.ip = IPAddress.Parse(ip);
             this.port = ushort.Parse(port);
-            // this.viwer = viwer;
             this.enterAuth = enterAuth;
             this.enterChat = enterChat;
             this.addText = addText;
+            this.addMessage = addMessage;
         }
 
         public int Connect(string userName)
@@ -50,7 +51,7 @@ namespace Client
                 connected = true;
                 stream = client.GetStream();
                 // Send AuthMessage
-                sendMsg(new M.AuthMsg(
+                SendMsg(new M.AuthMsg(
                     userName
                     ));
                 listener = new Thread(listen);
@@ -66,9 +67,10 @@ namespace Client
             }
             
         }
-        private void sendMsg(M.Msg msg) {
+        public void SendMsg(M.Msg msg) {
             var bytes = msg.Serialize();
-            stream.Write(bytes, 0, bytes.Count());
+            Thread sendThr = new Thread(() => { stream.Write(bytes, 0, bytes.Count()); });
+            sendThr.Start();
         }
         private byte[] readForFlag(byte flag = 0x00)
         {
@@ -81,15 +83,20 @@ namespace Client
                     buf.Add(bt);
                     if (bt == flag)
                     {
-                        return buf.ToArray();
+                        break;
                     }
                 }
                 catch (IOException ex) {
-                    // todo сообщить о том что сервер нас отключил
                     MessageBox.Show($"Сервер отключился сам или отключил вас", "Сервер закрыл подключение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     enterAuth();
+                    stream.Close();
+                    break;
                 }
+
+
+
             }
+            return buf.ToArray();
         }
 
 
@@ -119,6 +126,10 @@ namespace Client
                         addText(serverCaptionMsg.ServerCaption);
                         break;
 
+                    case 0x06:
+                        var newMessageMsg = M.NewMessageMsg.Deserialize(data);
+                        addMessage(newMessageMsg);
+                        break;
                     default:
                         break;
                 }

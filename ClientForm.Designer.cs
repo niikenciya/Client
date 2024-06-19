@@ -143,15 +143,16 @@
             this.chatViwer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.chatViwer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.chatViwer.Enabled = false;
-            this.chatViwer.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chatViwer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chatViwer.ForeColor = System.Drawing.Color.White;
             this.chatViwer.Location = new System.Drawing.Point(13, 13);
             this.chatViwer.Name = "chatViwer";
             this.chatViwer.ReadOnly = true;
+            this.chatViwer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.chatViwer.Size = new System.Drawing.Size(358, 22);
             this.chatViwer.TabIndex = 7;
             this.chatViwer.TabStop = false;
-            this.chatViwer.Text = "Вы типо уже подключились, приятного общения";
+            this.chatViwer.Text = "";
             this.chatViwer.Visible = false;
             // 
             // sendButton
@@ -172,6 +173,7 @@
             this.sendButton.Text = "Отправить";
             this.sendButton.UseVisualStyleBackColor = false;
             this.sendButton.Visible = false;
+            this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
             // 
             // messageTxt
             // 
@@ -180,7 +182,7 @@
             this.messageTxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.messageTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.messageTxt.Enabled = false;
-            this.messageTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.messageTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.messageTxt.ForeColor = System.Drawing.Color.White;
             this.messageTxt.Location = new System.Drawing.Point(13, 41);
             this.messageTxt.Multiline = true;
@@ -188,7 +190,6 @@
             this.messageTxt.Size = new System.Drawing.Size(358, 73);
             this.messageTxt.TabIndex = 9;
             this.messageTxt.TabStop = false;
-            this.messageTxt.Text = "Приветик, я тут немного посижу?)";
             this.messageTxt.Visible = false;
             // 
             // loaderImg
@@ -209,6 +210,7 @@
             // 
             // ClientForm
             // 
+            this.AcceptButton = this.connectButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -228,7 +230,9 @@
             this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "ClientForm";
             this.Padding = new System.Windows.Forms.Padding(10);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Клиент";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClientForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.loaderImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
