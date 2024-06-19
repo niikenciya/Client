@@ -148,7 +148,7 @@
             this.chatViwer.Location = new System.Drawing.Point(13, 13);
             this.chatViwer.Name = "chatViwer";
             this.chatViwer.ReadOnly = true;
-            this.chatViwer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.chatViwer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.chatViwer.Size = new System.Drawing.Size(358, 22);
             this.chatViwer.TabIndex = 7;
             this.chatViwer.TabStop = false;
@@ -232,7 +232,7 @@
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Клиент";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClientForm_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.loaderImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
