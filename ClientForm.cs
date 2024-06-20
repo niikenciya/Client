@@ -62,7 +62,6 @@ namespace Client
 
                 AcceptButton = connectButton;
                 Text = "Клиент";
-
             }));
         }
 
@@ -86,12 +85,9 @@ namespace Client
                 chatViwer.AppendText(msg.Text);
                 chatViwer.SelectionColor = Color.LightSkyBlue;
 
-
-
                 // прокрутка вниз
                 chatViwer.SelectionStart = chatViwer.TextLength;
                 chatViwer.ScrollToCaret();
-
             }));
         }
 
@@ -102,7 +98,6 @@ namespace Client
                 chatViwer.SelectionColor = Color.FromArgb(67, 178, 160);
                 chatViwer.AppendText(message);
                 chatViwer.SelectionColor = Color.LightSkyBlue;
-
             }));
         }
 
@@ -127,7 +122,6 @@ namespace Client
                 portTxt.Enabled = false;
                 userNameTxt.Enabled = false;
                 connectButton.Enabled = false;
-
 
                 messageTxt.Visible = true;
                 messageTxt.Enabled = true;
@@ -175,12 +169,6 @@ namespace Client
                     MessageBox.Show("Не удалось подключиться к серверу", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     enterAuth();
                 }
-                //else
-                //{
-                //    //Console.WriteLine("enterChat");
-                //    //enterChat();
-
-                //}
             });
             connectThr.Start();
         }
@@ -195,7 +183,6 @@ namespace Client
                 messageTxt.Text = "";
                 messageTxt.Select();
             }
-
         }
 
         private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -210,7 +197,6 @@ namespace Client
                 enterAuth();
                 e.Cancel = true;
             }
-
         }
     }
 }
