@@ -1,14 +1,11 @@
-﻿using Messages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using M = Messages;
 
@@ -16,15 +13,12 @@ namespace Client
 {
     internal class Client
     {
-        private static string pattern = @"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$";
+        private static string ipPattern = @"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$";
         private static string portPattern = @"^\d{1,5}$";
-
-        // private RichTextBox viwer;
         private Thread listener;
         public IPAddress Ip;
         private TcpClient client;
         public ushort Port;
-        // private TcpClient tcpClient;
         private Stream stream;
         public bool Connected;
         private Action enterAuth;
@@ -45,14 +39,12 @@ namespace Client
 
         public int Connect(string userName)
         {
-            // var ipEndPoint = new IPEndPoint(ip,port);
             try
             {
                 client = new TcpClient();
                 client.Connect(Ip, Port);
                 Connected = true;
                 stream = client.GetStream();
-                // Send AuthMessage
                 SendMsg(new M.AuthMsg(
                     userName
                     ));
@@ -60,16 +52,11 @@ namespace Client
                 listener = new Thread(listen);
                 listener.Start();
                 return 0;
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine("error in Connect");
-                Console.WriteLine(ex);
-                Console.WriteLine(ex.Message);
                 return -1;
             }
-
         }
 
         public void Disconnect()
@@ -112,7 +99,6 @@ namespace Client
                     stream.Close();
                     Connected = false;
                     enterAuth();
-
                 }
             }
             return buf.ToArray();
@@ -129,8 +115,6 @@ namespace Client
                     {
                         case 0x02:
                             var authResultMsg = M.AuthResultMsg.Deserialize(data);
-                            Console.WriteLine("authResultMsg.ResultCode");
-                            Console.WriteLine(authResultMsg.ResultCode);
                             if (authResultMsg.ResultCode != 0x01)
                             {
                                 Connected = false;
@@ -146,8 +130,6 @@ namespace Client
 
                         case 0x03:
                             var serverCaptionMsg = M.ServerCaptionMsg.Deserialize(data);
-                            Console.WriteLine("serverCaptionMsg.ServerCaption");
-                            Console.WriteLine(serverCaptionMsg.ServerCaption);
                             addText(serverCaptionMsg.ServerCaption);
                             break;
 
@@ -171,6 +153,7 @@ namespace Client
                             var userEnterMsg = M.UserEnterMsg.Deserialize(data);
                             addText(userEnterMsg.Time.ToString("\ndd.MM.yy HH:mm Пользователь ") + userEnterMsg.UserName + " присоединился");
                             break;
+
                         case 0x08:
                             var userLeaveMsg = M.UserLeaveMsg.Deserialize(data);
                             addText(userLeaveMsg.Time.ToString("\ndd.MM.yy HH:mm Пользователь ") + userLeaveMsg.UserName + " вышел");
@@ -185,7 +168,6 @@ namespace Client
                     Connected = false;
                     break;
                 }
-
             }
             stream.Close();
             client.Close();
@@ -193,8 +175,7 @@ namespace Client
 
         public static bool CheckIp(string ip)
         {
-            var matchCount = Regex.Matches(ip, pattern).Count;
-
+            var matchCount = Regex.Matches(ip, ipPattern).Count;
             if (matchCount == 1)
             {
                 int[] ipBytes = ip.Split('.').Select(int.Parse).ToArray();

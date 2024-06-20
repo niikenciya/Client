@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Messages
 {
@@ -25,7 +21,7 @@ namespace Messages
             long unix = 0;
             for (int i = 0; i < 8; i++)
             {
-                unix += (bytes[i] - 1) * (long)Math.Pow( 255, i);
+                unix += (bytes[i] - 1) * (long)Math.Pow(255, i);
             }
 
             return DateTimeOffset.FromUnixTimeSeconds(unix).DateTime;
