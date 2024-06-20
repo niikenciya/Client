@@ -155,8 +155,6 @@ namespace Client
             Thread connectThr = new Thread(() =>
             {
                 var res = client.Connect(userName);
-                Console.WriteLine("Connect result");
-                Console.WriteLine(res);
                 if (res != 0)
                 {
                     MessageBox.Show("Не удалось подключиться к серверу", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
