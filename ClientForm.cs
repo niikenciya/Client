@@ -69,6 +69,7 @@ namespace Client
         {
             Invoke((Action)(() =>
             {
+                chatViwer.SelectionStart = chatViwer.TextLength;
                 chatViwer.SelectionColor = Color.LightSkyBlue;
                 chatViwer.AppendText("\n" + msg.Time.ToString("dd.MM.yy HH:mm "));
                 if (client.UserName != msg.UserName)
@@ -95,6 +96,7 @@ namespace Client
         {
             Invoke((Action)(() =>
             {
+                chatViwer.SelectionStart = chatViwer.TextLength;
                 chatViwer.SelectionColor = Color.FromArgb(67, 178, 160);
                 chatViwer.AppendText(message);
                 chatViwer.SelectionColor = Color.LightSkyBlue;
