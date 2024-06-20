@@ -88,7 +88,6 @@
             this.ipTxt.Name = "ipTxt";
             this.ipTxt.Size = new System.Drawing.Size(182, 28);
             this.ipTxt.TabIndex = 1;
-            this.ipTxt.Text = "127.0.0.1";
             // 
             // portTxt
             // 
@@ -102,7 +101,6 @@
             this.portTxt.Name = "portTxt";
             this.portTxt.Size = new System.Drawing.Size(182, 28);
             this.portTxt.TabIndex = 3;
-            this.portTxt.Text = "5555";
             // 
             // userNameTxt
             // 
@@ -116,7 +114,6 @@
             this.userNameTxt.Name = "userNameTxt";
             this.userNameTxt.Size = new System.Drawing.Size(182, 28);
             this.userNameTxt.TabIndex = 5;
-            this.userNameTxt.Text = "GRA";
             // 
             // connectButton
             // 
